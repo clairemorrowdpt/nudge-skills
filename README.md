@@ -87,7 +87,7 @@ GitHub Pages redeploys automatically within ~60 seconds.
    ```
 3. In the GitHub repo settings → **Pages** → set source to **Deploy from a branch**, branch `main`, folder `/docs`
 4. Your Teamwork page will be live at:
-   `https://<your-username>.github.io/nudge-skills/team.html`
+   `https://clairemorrowdpt.github.io/nudge-skills/team.html`
 5. Share that URL with your team and add it to your `nudge-config.md` as the Teamwork URL
 
 ---

@@ -26,7 +26,7 @@ Set each to "yes" or "no". Add any special notes (e.g. which Asana project GID t
 
 ## Teamwork Page
 The shared team page URL (used for the nav link at the top of your nudge page):
-- **URL**: https://[github-username].github.io/nudge-skills/team.html
+- **URL**: https://clairemorrowdpt.github.io/nudge-skills/team.html
 
 ## Search Focus
 Any context that helps Claude prioritize what matters most to you:
