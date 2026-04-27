@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teamwork</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: #007aff;
+      text-decoration: none;
+    }
+    .nav a:hover { text-decoration: underline; }
+    .nav .sep { color: #c7c7cc; font-size: 13px; }
+    .nav .current { font-size: 13px; color: #6e6e73; }
+
+    /* Header */
+    header { margin-bottom: 36px; }
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    header .date {
+      font-size: 14px;
+      color: #6e6e73;
+      margin-top: 4px;
+    }
+
+    /* Team section */
+    .team-section { margin-bottom: 44px; }
+    .team-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6e6e73;
+      margin-bottom: 14px;
+    }
+
+    /* Grids */
+    .person-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .person-grid.three { grid-template-columns: repeat(3, 1fr); }
+    .person-grid.four  { grid-template-columns: repeat(4, 1fr); }
+
+    @media (max-width: 960px) {
+      .person-grid.three { grid-template-columns: 1fr 1fr; }
+      .person-grid.four  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .person-grid.three,
+      .person-grid.four  { grid-template-columns: 1fr; }
+    }
+
+    /* Person card */
+    .person-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .person-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid #f2f2f7;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.03em;
+    }
+
+    .person-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1d1d1f;
+      line-height: 1.2;
+    }
+    .person-role {
+      font-size: 11px;
+      color: #aeaeb2;
+      margin-top: 2px;
+    }
+
+    /* Area tags */
+    .person-areas {
+      padding: 10px 16px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      border-bottom: 1px solid #f2f2f7;
+    }
+    .area-tag {
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: #f2f2f7;
+      color: #6e6e73;
+      white-space: nowrap;
+    }
+
+    /* Card inner sections */
+    .card-section {
+      padding: 12px 16px 0;
+    }
+    .card-section:last-child { padding-bottom: 16px; }
+
+    .card-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #aeaeb2;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-section-label.clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .count-pill {
+      font-size: 10px;
+      font-weight: 500;
+      background: #f0fff4;
+      color: #34c759;
+      padding: 1px 7px;
+      border-radius: 99px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .chevron {
+      font-size: 10px;
+      color: #c7c7cc;
+      transition: transform 0.2s;
+      margin-left: 4px;
+    }
+    .collapsed .chevron { transform: rotate(-90deg); }
+
+    /* Pod update summaries */
+    .pod-updates-list { margin-bottom: 12px; }
+    .pod-updates-list.hidden { display: none; }
+
+    .pod-update-item {
+      padding: 7px 0;
+      border-bottom: 1px solid #f2f2f7;
+    }
+    .pod-update-item:last-child { border-bottom: none; }
+
+    .pod-update-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1d1d1f;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.green  { background: #34c759; }
+    .status-dot.yellow { background: #ff9500; }
+    .status-dot.red    { background: #ff3b30; }
+
+    .pod-update-text {
+      font-size: 12px;
+      color: #6e6e73;
+      line-height: 1.45;
+      padding-left: 12px;
+    }
+
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+    .task-list.hidden { display: none; }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .task-dot {
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #c7c7cc;
+      margin-top: 5px;
+    }
+    .task-done .task-dot { background: #34c759; }
+
+    .task-item a {
+      color: #1d1d1f;
+      text-decoration: none;
+    }
+    .task-item a:hover { text-decoration: underline; }
+    .task-done a {
+      color: #aeaeb2;
+      text-decoration: line-through;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 1px 6px;
+      border-radius: 99px;
+      margin-left: 5px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .badge.monitor  { background: #f0f8ff; color: #007aff; }
+    .badge.inperson { background: #fff4e0; color: #c96800; }
+
+    .task-empty {
+      font-size: 12px;
+      color: #c7c7cc;
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+
+    .card-divider {
+      height: 1px;
+      background: #f2f2f7;
+      margin: 0 16px 0;
+    }
+
+    footer {
+      margin-top: 48px;
+      font-size: 12px;
+      color: #c7c7cc;
+      text-align: center;
+    }
+    footer a { color: #c7c7cc; }
+    footer a:hover { color: #6e6e73; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="nav">
+    <a href="index.html">About</a>
+    <span class="sep">/</span>
+    <span class="current">Teamwork</span>
+  </nav>
+
+  <header>
+    <h1>Teamwork</h1>
+    <div class="date" id="week-range"></div>
+  </header>
+
+  <!-- ── Commercial Clinical Consultants ── -->
+  <div class="team-section">
+    <div class="team-label">Commercial Clinical Consultants</div>
+    <div class="person-grid three">
+
+      <!-- Bijal Toprani -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#007aff">BT</div>
+          <div>
+            <div class="person-name">Bijal Toprani</div>
+            <div class="person-role">Commercial Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">PT Commercial, Marketing, CS</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1214151123148711" target="_blank">Tarkett (USI Broker) — Virtual Demo</a><span class="badge monitor">Apr 28</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('bijal-last', this)" id="bijal-last-label">
+            Last Week <span class="count-pill">3 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="bijal-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439" target="_blank">ERS TX — BCBS RN Presentation (35 attendees)</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213442594987261" target="_blank">Murray State — Menopause Webinar</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213966532770461" target="_blank">Notre Dame — Lauren Lambiase</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Christynne Helfrich -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#34c759">CH</div>
+          <div>
+            <div class="person-name">Christynne Helfrich</div>
+            <div class="person-role">Commercial Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">PT Commercial, Marketing, CS</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1214070505018265" target="_blank">Acrisure — Lauren Lambiase, Virtual Demo</a><span class="badge monitor">Apr 29</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213577916490725" target="_blank">XPO Logistics — In Person, Ann Arbor MI</a><span class="badge inperson">Apr 30</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('christynne-last', this)" id="christynne-last-label">
+            Last Week <span class="count-pill">4 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="christynne-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213843116918211" target="_blank">CF Industries — Exercise Webinar</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439" target="_blank">Pinellas County</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439" target="_blank">BCBS MN — In Person, Minneapolis</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1214024323323568" target="_blank">Subaru — Lauren Lambiase</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jillian Kleiner -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#5856d6">JK</div>
+          <div>
+            <div class="person-name">Jillian Kleiner</div>
+            <div class="person-role">Commercial Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">PT Commercial, Marketing, CS</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213752348252362" target="_blank">Biogen — Ergonomics Webinar, Virtual</a><span class="badge monitor">Apr 29</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1214174034057134" target="_blank">AES — Sonny Mastromatteo, Virtual</a><span class="badge monitor">Apr 29</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213440662109313" target="_blank">Verizon — Expanding Your Family, Virtual</a><span class="badge monitor">Apr 30</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1214061851720678" target="_blank">Care New England — Virtual</a><span class="badge monitor">Apr 27+</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213811581476863" target="_blank">Cintas — WPH, Virtual</a><span class="badge monitor">May 4</span></div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439/task/1213994066801127" target="_blank">Yale New Haven Health — Virtual</a><span class="badge monitor">May 4</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('jillian-last', this)" id="jillian-last-label">
+            Last Week <span class="count-pill">2 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="jillian-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439" target="_blank">nVent — Arthritis Webinar</a></div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div><a href="https://app.asana.com/1/32993968966741/project/1200768211331439" target="_blank">CBRE — Stretch Webinar (stepped in for Bijal)</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /three-col -->
+  </div><!-- /commercial section -->
+
+  <!-- ── Product Clinical Consultants ── -->
+  <div class="team-section">
+    <div class="team-label">Product Clinical Consultants</div>
+    <div class="person-grid four">
+
+      <!-- Chloe Sondler -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#ff9500">CS</div>
+          <div>
+            <div class="person-name">Chloe Sondler</div>
+            <div class="person-role">Product Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">Program Experience</span>
+          <span class="area-tag">Migraines</span>
+          <span class="area-tag">Program Foundations</span>
+          <span class="area-tag">Exercise Therapy</span>
+          <span class="area-tag">CareHub Pods</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('chloe-pods', this)">
+            Pod Updates <span class="chevron">▾</span>
+          </div>
+          <div id="chloe-pods" class="pod-updates-list">
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Program Experience</div>
+              <div class="pod-update-text">YIYP screen launching this week; Metalab Phase I targeting v1.200. Login Redesign v2 called as a loser — neither hypothesis panned out, not shipping. Sessions for Menopause in discovery with Product &amp; Tech Jam this week.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Migraines</div>
+              <div class="pod-update-text">Phase 1 engineering complete Apr 9–10 (Member Record Header, Configurator, Engagement Calendar). Phase 2 (Episodes and Trends Card) now in design. CareHub Workflows e2e still dependent on Outcomes pod events by 4/30. Member Record Trends Card remains blocked by Assessment Team APIs until mid-May (Phase 3).</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Program Foundations</div>
+              <div class="pod-update-text">Perisurgical Unification recovering from RED — code complete 4/29, external launch May 13 (3rd timeline revision). Harness Engineering adoption consumed 50% of pod capacity for 1–2 sprints. WPH unification not yet started.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Exercise Therapy</div>
+              <div class="pod-update-text">Date-Based ET Session &amp; Program History 50/50 experiment complete — launched to 100% of members Apr 8. Configurator 2.0 also live for 100% of members Apr 8 (manages ET History &amp; Program Transitions). PIEOutro video removal experiment results expected 4/14.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>CareHub Pods</div>
+              <div class="pod-update-text">PRD complete for Program Transitions, Duplicate Accounts, and Application Acceptance migration into CareHub. Migraine Phase 1 eng completion Apr 9–10. Connect tab launching 4/15. ET Feedback Outreach workflow dev complete, alpha targeting 4/16.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">Last Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+      </div>
+
+      <!-- Lakshmi Sriramaneni -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#5ac8fa">LS</div>
+          <div>
+            <div class="person-name">Lakshmi Sriramaneni</div>
+            <div class="person-role">Product Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">Rewards &amp; Insights</span>
+          <span class="area-tag">Outcomes</span>
+          <span class="area-tag">Enrollment</span>
+          <span class="area-tag">Home Library</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('lakshmi-pods', this)">
+            Pod Updates <span class="chevron">▾</span>
+          </div>
+          <div id="lakshmi-pods" class="pod-updates-list">
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Rewards &amp; Insights</div>
+              <div class="pod-update-text">Enso Placement Test (6/8/10/12/14 active days) launched 4/6, go/no-go week of 5/4. New Member Challenge launching 4/22 — 3 weeks ahead of schedule. Incentive Points Test concluding week of 4/20. Daily Streaks V2 in design (Metalab post-summary screen, streak freeze).</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Outcomes</div>
+              <div class="pod-update-text">Post Pain Log Screen relaunching 4/13 after bug fix, now including Enso recommendation. Shortened Playlist V2 called as neutral — next steps TBD. Progress Tab Redesign paused while designer is OOO (~3 weeks). Pain Journal blocked pending NRS vs. VAS pain scale alignment.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Enrollment</div>
+              <div class="pod-update-text">In-App AQ Phase 1 test complete (74.1% downloaded app); one more test for "enroll now" visibility, then MVP spike. Breaking up long scroll screens was a winner (+$1.7M annual revenue). Direct to Wellness and Wellness from Acute delayed to Sprint 7 due to Harness Engineering. Coherent Triage PRs submitted.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Home Library</div>
+              <div class="pod-update-text">Today Carousel, Sessions/Playlist Rename, and Today Done State all dev complete in v1.200.0 with experiments starting 4/13. Gender-matched 2nd ET card and Done State Reminders in design. Robin Ingress in Explore paused pending Robin FAB learnings.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">Last Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+      </div>
+
+      <!-- Carol Passarelli -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#ff2d55">CP</div>
+          <div>
+            <div class="person-name">Carol Passarelli</div>
+            <div class="person-role">Product Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">Agentic Care (Robin)</span>
+          <span class="area-tag">Care Team Assistant</span>
+          <span class="area-tag">Proactive Comms</span>
+          <span class="area-tag">Intelligent Care Pods</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('carol-pods', this)">
+            Pod Updates <span class="chevron">▾</span>
+          </div>
+          <div id="carol-pods" class="pod-updates-list">
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Agentic Care (Robin)</div>
+              <div class="pod-update-text">Carol coordinating with PT Ops and CPO on Robin Pre-ET ingress — defining which member conversations and ET modifications need new PT-specific workflows. Working with CareHub pod on clinical communication requirements for the new use case.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Care Team Assistant (CTA)</div>
+              <div class="pod-update-text">Drift issues being addressed — prompt updates showing improvement in edit distance. Ramping to 50-50 experiment week of 4/14. Two major CTA updates coming: Guru cards and education/comms additions.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>Intelligent Care Neighborhood</div>
+              <div class="pod-update-text">Carol is primary clinical voice for Intelligent Care — balancing clinical consulting across all agentic care (Robin) and internal intelligent care products. Working on delineation doc for CareHub, Comms, and Member Records pods. AI PT task force active.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">Last Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+      </div>
+
+      <!-- Lori Walter -->
+      <div class="person-card">
+        <div class="person-header">
+          <div class="avatar" style="background:#af52de">LW</div>
+          <div>
+            <div class="person-name">Lori Walter</div>
+            <div class="person-role">Product Clinical Consultant</div>
+          </div>
+        </div>
+        <div class="person-areas">
+          <span class="area-tag">CV User Experience</span>
+          <span class="area-tag">CV Engineering</span>
+          <span class="area-tag">CV Science &amp; Data</span>
+          <span class="area-tag">Enso SW</span>
+        </div>
+
+        <div class="card-section">
+          <div class="card-section-label clickable" onclick="toggleSection('lori-pods', this)">
+            Pod Updates <span class="chevron">▾</span>
+          </div>
+          <div id="lori-pods" class="pod-updates-list">
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot green"></span>CV User Experience</div>
+              <div class="pod-update-text">CVMA MLP holding 90/10 — cumulative +66% CVs completed, +115% CV WAU/ET WAU. Start Rate experiment launched in v1.200 (target: 78%→85%). Camera Permissions experiment running with early positive signs. Repeat Rate experiments (target: 44%→60%) entering UX Quality Review. Metalab redesign designs complete end of sprint; Perifit kicked off with X6 Innovations.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>CV Engineering / PETRA</div>
+              <div class="pod-update-text">PETRA &lt;&gt; CV feature complete but YELLOW — bug fixes wrapping up Q2 Sprint 1; one ticket pushed due to unexpected staff engineer departure. Final testing in v1.201, expected launch v1.202. Harrier engine (3D pose inference) live in v1.198; next engine "Ibizian" pending Gate 1 definition.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Enso SW</div>
+              <div class="pod-update-text">M2→M3 upgrade launching 4/22 (~$9M net revenue projected); M2 gel pad depletion estimated 4/25 — very tight timing. Enso for Migraine targeting 4/10 production ready, with P1 items (Config, Live Activities, Billing, Program Transition, Instrumentation) still in dev. M4 Plus formative study started 4/2. M2 session counter bug (1.199.0) under investigation.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">This Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-section">
+          <div class="card-section-label">Last Week</div>
+          <div class="task-empty">Asana data source coming soon</div>
+        </div>
+      </div>
+
+    </div><!-- /four-col -->
+  </div><!-- /product section -->
+
+  <footer>
+    Updated Mondays at 8am &middot; <a href="index.html">My Nudge</a>
+  </footer>
+
+</div>
+<script>
+  function setWeekRange() {
+    const today = new Date();
+    const day = today.getDay();
+    const mon = new Date(today);
+    mon.setDate(today.getDate() - ((day + 6) % 7));
+    const sun = new Date(mon);
+    sun.setDate(mon.getDate() + 6);
+    const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    document.getElementById('week-range').textContent =
+      'Week of ' + fmt(mon) + '–' + fmt(sun) + ', ' + mon.getFullYear();
+  }
+
+  function toggleSection(id, labelEl) {
+    const list = document.getElementById(id);
+    list.classList.toggle('hidden');
+    labelEl.classList.toggle('collapsed');
+  }
+
+  setWeekRange();
+</script>
+</body>
+</html>

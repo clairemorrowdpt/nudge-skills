@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nudge — PT Consultants</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .subtitle { font-size: 16px; color: #6e6e73; margin-bottom: 48px; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: #6e6e73;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .btn {
+      display: inline-block;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      background: #007aff;
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: #0062cc; }
+    .btn.secondary {
+      background: #f2f2f7;
+      color: #1d1d1f;
+    }
+    .btn.secondary:hover { background: #e5e5ea; }
+    .step-list {
+      list-style: none;
+      counter-reset: steps;
+    }
+    .step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #3a3a3c;
+    }
+    .step-list li::before {
+      content: counter(steps);
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #007aff;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    code {
+      font-family: "SF Mono", Menlo, monospace;
+      font-size: 12px;
+      background: #f2f2f7;
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #1d1d1f;
+    }
+    footer {
+      margin-top: 48px;
+      font-size: 12px;
+      color: #c7c7cc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Nudge</h1>
+  <p class="subtitle">Weekly action-item dashboard for the PT Consultants team.</p>
+
+  <div class="card">
+    <div class="card-title">📋 Teamwork — Shared Team View</div>
+    <div class="card-desc">
+      This week's and last week's engagements for Bijal, Christynne, Jillian, and the Product team.
+      Updated every Monday. View-only — no login required.
+    </div>
+    <a href="team.html" class="btn">View Teamwork →</a>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ My Nudge — Personal Dashboard</div>
+    <div class="card-desc">
+      Your personal nudge page lives on your own computer and is only visible to you.
+      It pulls your email, calendar, Slack mentions, and Asana tasks into one checklist.
+    </div>
+
+    <p style="font-size:13px;font-weight:600;color:#6e6e73;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.05em;">Setup (one time)</p>
+    <ol class="step-list">
+      <li>
+        Clone the repo: <code>git clone &lt;repo-url&gt; ~/nudge-skills</code>
+      </li>
+      <li>
+        Copy the skill files to your global Claude Code commands folder:<br>
+        <code>cp ~/nudge-skills/.claude/commands/* ~/.claude/commands/</code>
+      </li>
+      <li>
+        Copy the example config and fill it in:<br>
+        <code>cp ~/nudge-skills/nudge-config.example.md ~/nudge/nudge-config.md</code><br>
+        Open <code>~/nudge/nudge-config.md</code> and fill in your name, email, role, and Asana project GID.
+      </li>
+      <li>
+        Open Claude Code and run <code>/nudge</code>. Your personal dashboard generates at <code>~/nudge/index.html</code>.
+      </li>
+    </ol>
+
+    <p style="font-size:13px;color:#6e6e73;margin-top:16px;">
+      Run <code>/nudge</code> any time to refresh your dashboard. Tell Claude to modify which sources it searches — it reads your config file.
+    </p>
+  </div>
+
+  <footer>PT Consultants · Hinge Health</footer>
+
+</div>
+</body>
+</html>

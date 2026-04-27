@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nudge</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 32px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    header .date {
+      font-size: 14px;
+      color: #6e6e73;
+      margin-top: 4px;
+    }
+
+    .progress-bar-wrap {
+      background: #e5e5ea;
+      border-radius: 99px;
+      height: 6px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #34c759;
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: #6e6e73;
+      margin-top: 6px;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    section h2 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6e6e73;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 18px;
+      cursor: pointer;
+      border-bottom: 1px solid #f2f2f7;
+      transition: background 0.15s ease;
+      user-select: none;
+    }
+
+    .item:last-child { border-bottom: none; }
+    .item:hover { background: #f9f9fb; }
+    .item.done { background: #f9f9fb; }
+
+    .checkbox {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #c7c7cc;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .item.done .checkbox {
+      background: #34c759;
+      border-color: #34c759;
+    }
+
+    .checkbox svg { display: none; }
+    .item.done .checkbox svg { display: block; }
+
+    .content { flex: 1; }
+
+    .item-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1d1d1f;
+      transition: color 0.2s ease;
+    }
+
+    .item-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .item-title a:hover { text-decoration: underline; }
+
+    .item.done .item-title {
+      color: #aeaeb2;
+      text-decoration: line-through;
+    }
+
+    .item.done .item-title a {
+      color: #aeaeb2;
+      pointer-events: none;
+    }
+
+    .item-desc {
+      font-size: 13px;
+      color: #6e6e73;
+      margin-top: 3px;
+      line-height: 1.5;
+      transition: color 0.2s ease;
+    }
+
+    .item.done .item-desc { color: #c7c7cc; }
+
+    .item-meta {
+      font-size: 12px;
+      color: #aeaeb2;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .badge.urgent  { background: #fff0f0; color: #ff3b30; }
+    .badge.monitor { background: #f0f8ff; color: #007aff; }
+    .badge.slack   { background: #f0f0ff; color: #611f69; }
+    .badge.inperson { background: #fff4e0; color: #c96800; }
+
+    .reset-btn {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #aeaeb2;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .reset-btn:hover { color: #6e6e73; }
+
+    .add-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .add-input {
+      flex: 1;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 14px;
+      border: 1.5px solid #e5e5ea;
+      border-radius: 10px;
+      background: #fff;
+      color: #1d1d1f;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .add-input:focus { border-color: #007aff; }
+    .add-input::placeholder { color: #c7c7cc; }
+
+    .add-btn {
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 18px;
+      background: #007aff;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .add-btn:hover { background: #0062cc; }
+
+    .item .remove-btn {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #c7c7cc;
+      font-size: 18px;
+      line-height: 1;
+      padding: 0 0 0 4px;
+      margin-top: 1px;
+      transition: color 0.15s;
+      display: none;
+    }
+
+    .item:hover .remove-btn { display: block; }
+    .item .remove-btn:hover { color: #ff3b30; }
+
+    .item .dismiss-btn {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #c7c7cc;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 2px 0 0 6px;
+      transition: color 0.15s;
+      display: none;
+      white-space: nowrap;
+    }
+
+    .item:hover .dismiss-btn { display: block; }
+    .item .dismiss-btn:hover { color: #aeaeb2; }
+
+    .manage-hidden-btn {
+      display: none;
+      margin-top: 8px;
+      margin-left: 16px;
+      font-size: 13px;
+      color: #aeaeb2;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .manage-hidden-btn:hover { color: #6e6e73; }
+
+    #hidden-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 100;
+    }
+
+    #hidden-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      width: min(480px, calc(100vw - 40px));
+      max-height: 70vh;
+      overflow-y: auto;
+      z-index: 101;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    #hidden-panel h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #1d1d1f;
+    }
+
+    .hidden-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f2f2f7;
+      gap: 12px;
+    }
+
+    .hidden-item:last-of-type { border-bottom: none; }
+
+    .hidden-item-title {
+      font-size: 14px;
+      color: #6e6e73;
+      flex: 1;
+    }
+
+    .restore-btn {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      color: #007aff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    .restore-btn:hover { text-decoration: underline; }
+
+    #hidden-panel-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f2f2f7;
+    }
+
+    .restore-all-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: #007aff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .restore-all-btn:hover { text-decoration: underline; }
+
+    .close-modal-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: #6e6e73;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .close-modal-btn:hover { color: #1d1d1f; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 10px;
+    }
+
+    .section-header h2 { margin-bottom: 0; }
+    .section-header:hover h2 { color: #1d1d1f; }
+
+    .chevron {
+      font-size: 10px;
+      color: #aeaeb2;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .chevron.collapsed { transform: rotate(-90deg); }
+
+    #resolved-section { display: none; }
+
+    #resolved-card .item.done { background: #f9f9fb; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+      <span style="font-size:13px;font-weight:500;color:#6e6e73">My Nudge</span>
+      <span style="color:#c7c7cc;font-size:13px">/</span>
+      <a href="TEAMWORK_URL" style="font-size:13px;font-weight:500;color:#007aff;text-decoration:none;">Teamwork</a>
+    </nav>
+
+    <header>
+      <h1>Nudge</h1>
+      <div class="date" id="dateLabel"></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-label" id="progressLabel"></div>
+    </header>
+
+    <section>
+      <h2>Action Required</h2>
+      <div class="card" id="action-list">
+        <!-- Items added by /nudge skill -->
+      </div>
+    </section>
+
+    <section>
+      <h2>Monitor / No Immediate Action</h2>
+      <div class="card">
+        <!-- Items added by /nudge skill -->
+      </div>
+    </section>
+
+    <section>
+      <h2>Slack — Needs Reply</h2>
+      <div class="card">
+        <div class="item" style="color:#aeaeb2;font-size:14px;padding:16px 18px;">No unread Slack items.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Asana — This Week</h2>
+      <div class="card" id="asana-thisweek-list">
+        <!-- Items added by /nudge skill -->
+        <div class="item" onclick="window.open('https://app.asana.com/0/home', '_blank'); return false;">
+          <div class="checkbox" style="visibility:hidden"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4L4 7L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="content">
+            <div class="item-title" style="color:#007aff">View my tasks in Asana →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Asana — Upcoming / Recently Assigned</h2>
+      <div class="card" id="asana-recent-list">
+        <!-- Items added by /nudge skill -->
+        <div class="item" onclick="window.open('https://app.asana.com/0/home', '_blank'); return false;">
+          <div class="checkbox" style="visibility:hidden"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4L4 7L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="content">
+            <div class="item-title" style="color:#007aff">View all tasks in Asana →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="add-item-section">
+      <h2>Add Item</h2>
+      <div class="add-form">
+        <input class="add-input" id="addText" type="text" placeholder="What needs doing?" maxlength="200"
+          onkeydown="if(event.key==='Enter') addItem()" />
+        <button class="add-btn" onclick="addItem()">Add</button>
+      </div>
+    </section>
+
+    <section id="resolved-section">
+      <div class="section-header" onclick="toggleResolved()">
+        <h2>Resolved</h2>
+        <span class="chevron" id="resolved-chevron">▾</span>
+      </div>
+      <div class="card" id="resolved-card"></div>
+    </section>
+
+    <div>
+      <button class="reset-btn" onclick="resetAll()">Reset all items</button>
+      <button class="manage-hidden-btn" id="manage-hidden-btn" onclick="openHiddenModal()">Manage hidden items</button>
+    </div>
+  </div>
+
+  <div id="hidden-modal" style="display:none">
+    <div id="hidden-overlay" onclick="closeHiddenModal()"></div>
+    <div id="hidden-panel">
+      <h3>Hidden Items</h3>
+      <div id="hidden-list"></div>
+      <div id="hidden-panel-footer">
+        <button class="restore-all-btn" onclick="restoreAll()">Restore all</button>
+        <button class="close-modal-btn" onclick="closeHiddenModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'gdoc-checklist-' + todayKey();
+
+    function todayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
+
+    function resolvedCard() { return document.getElementById('resolved-card'); }
+    function resolvedSection() { return document.getElementById('resolved-section'); }
+
+    function toggle(el) {
+      const wasDone = el.classList.contains('done');
+      el.classList.toggle('done');
+
+      if (!wasDone) {
+        el.dataset.origin = el.parentElement.id;
+        resolvedCard().appendChild(el);
+        resolvedSection().style.display = 'block';
+      } else {
+        const origin = document.getElementById(el.dataset.origin);
+        if (origin) origin.appendChild(el);
+        delete el.dataset.origin;
+        if (!resolvedCard().querySelector('.item')) {
+          resolvedSection().style.display = 'none';
+        }
+      }
+
+      saveState();
+      updateProgress();
+    }
+
+    function saveState() {
+      const state = {};
+      document.querySelectorAll('.item').forEach(el => {
+        state[el.dataset.id] = { done: el.classList.contains('done'), origin: el.dataset.origin || null };
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      document.querySelectorAll('.item').forEach(el => {
+        const s = state[el.dataset.id];
+        if (!s) return;
+        const isDone = typeof s === 'boolean' ? s : s.done;
+        const origin = typeof s === 'object' ? s.origin : null;
+        if (isDone) {
+          el.classList.add('done');
+          if (origin) el.dataset.origin = origin;
+          resolvedCard().appendChild(el);
+          resolvedSection().style.display = 'block';
+        }
+      });
+    }
+
+    function updateProgress() {
+      const total = document.querySelectorAll('.item').length;
+      const done = resolvedCard().querySelectorAll('.item').length;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = `${done} of ${total} completed`;
+    }
+
+    function toggleResolved() {
+      const card = resolvedCard();
+      const chevron = document.getElementById('resolved-chevron');
+      const isHidden = card.style.display === 'none';
+      card.style.display = isHidden ? '' : 'none';
+      chevron.classList.toggle('collapsed', !isHidden);
+    }
+
+    function resetAll() {
+      resolvedCard().querySelectorAll('.item').forEach(el => {
+        el.classList.remove('done');
+        const origin = document.getElementById(el.dataset.origin);
+        if (origin) origin.appendChild(el);
+        delete el.dataset.origin;
+      });
+      resolvedSection().style.display = 'none';
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_KEY + '-manual');
+      document.querySelectorAll('.item[data-manual]').forEach(el => el.remove());
+      updateProgress();
+    }
+
+    function addItem() {
+      const input = document.getElementById('addText');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const id = 'manual-' + Date.now();
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.id = id;
+      item.dataset.manual = '1';
+      item.setAttribute('onclick', 'toggle(this)');
+      item.innerHTML = `
+        <div class="checkbox">
+          <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
+            <path d="M1 4L4 7L10 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="content">
+          <div class="item-title">${escapeHtml(text)}</div>
+        </div>
+        <button class="remove-btn" title="Remove" onclick="event.stopPropagation(); removeItem(this)">×</button>
+      `;
+
+      let card = document.getElementById('manual-card');
+      if (!card) {
+        const section = document.createElement('section');
+        section.innerHTML = '<h2>My Items</h2>';
+        card = document.createElement('div');
+        card.className = 'card';
+        card.id = 'manual-card';
+        section.appendChild(card);
+        document.getElementById('add-item-section').before(section);
+      }
+      card.appendChild(item);
+
+      input.value = '';
+      saveManual();
+      updateProgress();
+    }
+
+    function removeItem(btn) {
+      btn.closest('.item').remove();
+      const card = document.getElementById('manual-card');
+      if (card && !card.querySelector('.item')) card.closest('section').remove();
+      if (!resolvedCard().querySelector('.item')) resolvedSection().style.display = 'none';
+      saveManual();
+      updateProgress();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function saveManual() {
+      const items = [];
+      document.querySelectorAll('.item[data-manual]').forEach(el => {
+        items.push({ id: el.dataset.id, text: el.querySelector('.item-title').textContent, done: el.classList.contains('done'), origin: el.dataset.origin || null });
+      });
+      localStorage.setItem(STORAGE_KEY + '-manual', JSON.stringify(items));
+    }
+
+    function loadManual() {
+      const raw = localStorage.getItem(STORAGE_KEY + '-manual');
+      if (!raw) return;
+      JSON.parse(raw).forEach(({ id, text, done, origin }) => {
+        const input = document.getElementById('addText');
+        input.value = text;
+        addItem();
+        if (done) {
+          const el = document.querySelector(`[data-id="${id}"]`);
+          if (el) {
+            el.classList.add('done');
+            if (origin) el.dataset.origin = origin;
+            resolvedCard().appendChild(el);
+            resolvedSection().style.display = 'block';
+          }
+        }
+      });
+      document.getElementById('addText').value = '';
+    }
+
+    function setDate() {
+      const d = new Date();
+      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('dateLabel').textContent = d.toLocaleDateString('en-US', opts);
+    }
+
+    const DISMISSED_KEY = 'nudge-dismissed';
+
+    function addDismissButtons() {
+      document.querySelectorAll('.item:not([data-manual])').forEach(el => {
+        if (!el.querySelector('.dismiss-btn')) {
+          const btn = document.createElement('button');
+          btn.className = 'dismiss-btn';
+          btn.title = 'Don\'t show again';
+          btn.textContent = 'hide';
+          btn.onclick = function(e) { e.stopPropagation(); dismissItem(this); };
+          el.appendChild(btn);
+        }
+      });
+    }
+
+    function dismissItem(btn) {
+      const item = btn.closest('.item');
+      const id = item.dataset.id;
+      const title = item.querySelector('.item-title').textContent.trim();
+      const dismissed = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      if (!dismissed.find(d => (typeof d === 'string' ? d : d.id) === id)) {
+        dismissed.push({ id, title });
+      }
+      localStorage.setItem(DISMISSED_KEY, JSON.stringify(dismissed));
+      item.remove();
+      if (!resolvedCard().querySelector('.item')) resolvedSection().style.display = 'none';
+      updateProgress();
+      updateManageHiddenBtn();
+    }
+
+    function loadDismissed() {
+      const dismissed = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      dismissed.forEach(d => {
+        const id = typeof d === 'string' ? d : d.id;
+        const el = document.querySelector(`[data-id="${id}"]`);
+        if (el) el.remove();
+      });
+    }
+
+    function updateManageHiddenBtn() {
+      const dismissed = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      document.getElementById('manage-hidden-btn').style.display = dismissed.length > 0 ? 'inline-block' : 'none';
+    }
+
+    function openHiddenModal() {
+      const dismissed = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      const list = document.getElementById('hidden-list');
+      list.innerHTML = dismissed.length === 0
+        ? '<p style="color:#aeaeb2;font-size:14px;padding:8px 0">No hidden items.</p>'
+        : dismissed.map(d => {
+            const id = typeof d === 'string' ? d : d.id;
+            const title = typeof d === 'object' && d.title ? d.title : id;
+            return `<div class="hidden-item">
+              <span class="hidden-item-title">${escapeHtml(title)}</span>
+              <button class="restore-btn" onclick="restoreItem('${escapeHtml(id)}')">Restore</button>
+            </div>`;
+          }).join('');
+      document.getElementById('hidden-modal').style.display = 'block';
+    }
+
+    function closeHiddenModal() {
+      document.getElementById('hidden-modal').style.display = 'none';
+    }
+
+    function restoreItem(id) {
+      const dismissed = JSON.parse(localStorage.getItem(DISMISSED_KEY) || '[]');
+      localStorage.setItem(DISMISSED_KEY, JSON.stringify(
+        dismissed.filter(d => (typeof d === 'string' ? d : d.id) !== id)
+      ));
+      location.reload();
+    }
+
+    function restoreAll() {
+      localStorage.removeItem(DISMISSED_KEY);
+      location.reload();
+    }
+
+    setDate();
+    addDismissButtons();
+    loadDismissed();
+    loadState();
+    loadManual();
+    updateProgress();
+    updateManageHiddenBtn();
+  </script>
+</body>
+</html>
