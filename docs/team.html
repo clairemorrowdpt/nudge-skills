@@ -502,24 +502,28 @@
           </div>
           <div id="chloe-pods" class="pod-updates-list">
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Program Experience</div>
-              <div class="pod-update-text">YIYP screen launching this week; Metalab Phase I targeting v1.200. Login Redesign v2 called as a loser — neither hypothesis panned out, not shipping. Sessions for Menopause in discovery with Product &amp; Tech Jam this week.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>WPH</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Clinical input on WPH FTU exercises and PSFS rollout questions.<br>
+                <b>Update:</b> Active thread this week — Amber Cyr reworking TDD 4.9 for hardcoded exercise list; PSFS confirmed not for WPH members, DDS2.0 temporarily surfacing it.<br>
+                <b>Action:</b> Monitor TDD 4.9 completion and DDS2.0 fix.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Migraines</div>
-              <div class="pod-update-text">Phase 1 engineering complete Apr 9–10 (Member Record Header, Configurator, Engagement Calendar). Phase 2 (Episodes and Trends Card) now in design. CareHub Workflows e2e still dependent on Outcomes pod events by 4/30. Member Record Trends Card remains blocked by Assessment Team APIs until mid-May (Phase 3).</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Migraines</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> DRI for PT readiness for Migraine program launch.<br>
+                <b>Update:</b> May 11 launch target — finalizing PT workflows for symptom uptick, active migraine, and Enso efficacy.<br>
+                <b>Action:</b> Confirm PT workflows complete before May 11.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>Program Foundations</div>
-              <div class="pod-update-text">Perisurgical Unification recovering from RED — code complete 4/29, external launch May 13 (3rd timeline revision). Harness Engineering adoption consumed 50% of pod capacity for 1–2 sprints. WPH unification not yet started.</div>
-            </div>
-            <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Exercise Therapy</div>
-              <div class="pod-update-text">Date-Based ET Session &amp; Program History 50/50 experiment complete — launched to 100% of members Apr 8. Configurator 2.0 also live for 100% of members Apr 8 (manages ET History &amp; Program Transitions). PIEOutro video removal experiment results expected 4/14.</div>
-            </div>
-            <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>CareHub Pods</div>
-              <div class="pod-update-text">PRD complete for Program Transitions, Duplicate Accounts, and Application Acceptance migration into CareHub. Migraine Phase 1 eng completion Apr 9–10. Connect tab launching 4/15. ET Feedback Outreach workflow dev complete, alpha targeting 4/16.</div>
+              <div class="pod-update-name"><span class="status-dot green"></span>PT AI Task Force</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Leads edge case testing for Robin GPR at weekly PT AI Task Force syncs.<br>
+                <b>Update:</b> Weekly syncs running; active collaboration with Carol's team on Robin guardrails.<br>
+                <b>Action:</b> None urgent.
+              </div>
             </div>
           </div>
         </div>
@@ -527,12 +531,40 @@
         <div class="card-divider"></div>
         <div class="card-section">
           <div class="card-section-label">This Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>WPH FTU exercises — Amber Cyr TDD 4.9 review (active thread)</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>WPH PSFS question — tracking DDS2.0 fix for false PSFS display</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Migraine PT workflow finalization for May 11 launch</div>
+            </div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <div class="card-section">
-          <div class="card-section-label">Last Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="card-section-label clickable" onclick="toggleSection('chloe-last', this)" id="chloe-last-label">
+            Last Week <span class="count-pill">3 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="chloe-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>WPH bucketing logic alignment with Lakshmi</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>PT AI Task Force weekly sync — Robin GPR edge case testing</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>Care Hub 2.0 Q1 survey consolidation</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -558,20 +590,28 @@
           </div>
           <div id="lakshmi-pods" class="pod-updates-list">
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Rewards &amp; Insights</div>
-              <div class="pod-update-text">Enso Placement Test (6/8/10/12/14 active days) launched 4/6, go/no-go week of 5/4. New Member Challenge launching 4/22 — 3 weeks ahead of schedule. Incentive Points Test concluding week of 4/20. Daily Streaks V2 in design (Metalab post-summary screen, streak freeze).</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>WPH Enrollment</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Finalizing WPH sub-condition enrollment flags for unification work.<br>
+                <b>Update:</b> postPartumTooSoon and high_risk_pregnancy flags defined; Anna Cosentino's team awaiting finalized flags.<br>
+                <b>Action:</b> Deliver finalized flags to Anna's team.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>Outcomes</div>
-              <div class="pod-update-text">Post Pain Log Screen relaunching 4/13 after bug fix, now including Enso recommendation. Shortened Playlist V2 called as neutral — next steps TBD. Progress Tab Redesign paused while designer is OOO (~3 weeks). Pain Journal blocked pending NRS vs. VAS pain scale alignment.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Condition Editing Rollout</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Tracking condition editing rollout for v1.200 members.<br>
+                <b>Update:</b> Bug report Apr 27 — some v1.200 members not seeing condition editing in app.<br>
+                <b>Action:</b> Follow up on PT-reported condition editing bug reports.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Enrollment</div>
-              <div class="pod-update-text">In-App AQ Phase 1 test complete (74.1% downloaded app); one more test for "enroll now" visibility, then MVP spike. Breaking up long scroll screens was a winner (+$1.7M annual revenue). Direct to Wellness and Wellness from Acute delayed to Sprint 7 due to Harness Engineering. Coherent Triage PRs submitted.</div>
-            </div>
-            <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Home Library</div>
-              <div class="pod-update-text">Today Carousel, Sessions/Playlist Rename, and Today Done State all dev complete in v1.200.0 with experiments starting 4/13. Gender-matched 2nd ET card and Done State Reminders in design. Robin Ingress in Explore paused pending Robin FAB learnings.</div>
+              <div class="pod-update-name"><span class="status-dot green"></span>RAIN Rewards / Home Library</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> WPH TDD rewards tracker validation and Home Library WPH integration.<br>
+                <b>Update:</b> RAIN rewards tracker validation in progress for WPH TDD.<br>
+                <b>Action:</b> Complete RAIN tracker validation for WPH TDD sign-off.
+              </div>
             </div>
           </div>
         </div>
@@ -579,12 +619,36 @@
         <div class="card-divider"></div>
         <div class="card-section">
           <div class="card-section-label">This Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>WPH unification enrollment flags — finalize for Anna Cosentino's team</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Condition editing v1.200 bug — tracking member reports</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Home Library WPH TDD / RAIN rewards tracker validation</div>
+            </div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <div class="card-section">
-          <div class="card-section-label">Last Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="card-section-label clickable" onclick="toggleSection('lakshmi-last', this)" id="lakshmi-last-label">
+            Last Week <span class="count-pill">2 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="lakshmi-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>WPH bucketing / high_risk_pregnancy sub-conditions alignment with Chloe</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>postPartumTooSoon enrollment flag alignment with enrollment team</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -610,16 +674,28 @@
           </div>
           <div id="carol-pods" class="pod-updates-list">
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>Agentic Care (Robin)</div>
-              <div class="pod-update-text">Carol coordinating with PT Ops and CPO on Robin Pre-ET ingress — defining which member conversations and ET modifications need new PT-specific workflows. Working with CareHub pod on clinical communication requirements for the new use case.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Robin (Agentic Care)</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Clinical lead for Robin polish sprint and external demo prep.<br>
+                <b>Update:</b> Sprint 4/27–5/8; RC cut 5/13. Phase 0 internal testing with HH dogfood + PT AI Task Force underway. Guardrail notes provided for CVS (May 4) and Amazon (May 7) demos.<br>
+                <b>Action:</b> Verify "within 1 business day" copy update applied to Pain Uptick; confirm PT AI Task Force participation.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>Care Team Assistant (CTA)</div>
-              <div class="pod-update-text">Drift issues being addressed — prompt updates showing improvement in edit distance. Ramping to 50-50 experiment week of 4/14. Two major CTA updates coming: Guru cards and education/comms additions.</div>
+              <div class="pod-update-name"><span class="status-dot green"></span>Care Team Assistant (CTA)</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> CTA — live at 50/50 since Apr 23.<br>
+                <b>Update:</b> CTA reached 50/50 on Apr 23. Emergency escalation prompt ready. "Within 1 business day" copy update for Pain Uptick still pending confirmation.<br>
+                <b>Action:</b> Verify copy update is applied.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>Intelligent Care Neighborhood</div>
-              <div class="pod-update-text">Carol is primary clinical voice for Intelligent Care — balancing clinical consulting across all agentic care (Robin) and internal intelligent care products. Working on delineation doc for CareHub, Comms, and Member Records pods. AI PT task force active.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Amazon Demo Prep (May 7)</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Robin clinical input for the Amazon May 7 leadership demo.<br>
+                <b>Update:</b> Syncing regularly with Christynne, Lori, Erin, Kara, Alina to build end-to-end member narrative.<br>
+                <b>Action:</b> Support Robin demo flow for May 7.
+              </div>
             </div>
           </div>
         </div>
@@ -627,12 +703,40 @@
         <div class="card-divider"></div>
         <div class="card-section">
           <div class="card-section-label">This Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Robin polish sprint (4/27–5/8) — Phase 0 internal testing with PT AI Task Force</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Amazon demo prep (May 7) — syncing with Christynne, Lori, Erin, Kara, Alina</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>CVS demo prep (May 4) — Robin guardrail notes provided</div>
+            </div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <div class="card-section">
-          <div class="card-section-label">Last Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="card-section-label clickable" onclick="toggleSection('carol-last', this)" id="carol-last-label">
+            Last Week <span class="count-pill">3 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="carol-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>CTA launched to 50/50 (Apr 23)</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>Robin guardrail notes provided for CVS and Amazon demos</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>Updated ET Modification Loop tiger team strategy doc</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -658,16 +762,28 @@
           </div>
           <div id="lori-pods" class="pod-updates-list">
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot green"></span>CV User Experience</div>
-              <div class="pod-update-text">CVMA MLP holding 90/10 — cumulative +66% CVs completed, +115% CV WAU/ET WAU. Start Rate experiment launched in v1.200 (target: 78%→85%). Camera Permissions experiment running with early positive signs. Repeat Rate experiments (target: 44%→60%) entering UX Quality Review. Metalab redesign designs complete end of sprint; Perifit kicked off with X6 Innovations.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>Amazon Demo (CareHub Expert)</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> CareHub subject matter expert for Amazon leadership demo (May 7).<br>
+                <b>Update:</b> Building end-to-end member narrative for Kelly demo account (ET, Enso, CVMA, care team interactions) with Christynne, Alina, Erin, Kara.<br>
+                <b>Action:</b> Critical resource — confirm availability and flow for May 7.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>CV Engineering / PETRA</div>
-              <div class="pod-update-text">PETRA &lt;&gt; CV feature complete but YELLOW — bug fixes wrapping up Q2 Sprint 1; one ticket pushed due to unexpected staff engineer departure. Final testing in v1.201, expected launch v1.202. Harrier engine (3D pose inference) live in v1.198; next engine "Ibizian" pending Gate 1 definition.</div>
+              <div class="pod-update-name"><span class="status-dot yellow"></span>CV Engineering</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> CV build quality and PETRA feature tracking.<br>
+                <b>Update:</b> Bugs reported in 1.202 stage builds under investigation.<br>
+                <b>Action:</b> Monitor before v1.202 launch.
+              </div>
             </div>
             <div class="pod-update-item">
-              <div class="pod-update-name"><span class="status-dot yellow"></span>Enso SW</div>
-              <div class="pod-update-text">M2→M3 upgrade launching 4/22 (~$9M net revenue projected); M2 gel pad depletion estimated 4/25 — very tight timing. Enso for Migraine targeting 4/10 production ready, with P1 items (Config, Live Activities, Billing, Program Transition, Instrumentation) still in dev. M4 Plus formative study started 4/2. M2 session counter bug (1.199.0) under investigation.</div>
+              <div class="pod-update-name"><span class="status-dot green"></span>Enso SW</div>
+              <div class="pod-update-text">
+                <b>What it is:</b> Enso software — M2→M3 upgrade and Migraine program support.<br>
+                <b>Update:</b> M2→M3 upgrade launched Apr 22. Enso for Migraine in progress. CVMA MLP holding 90/10 positive.<br>
+                <b>Action:</b> None urgent.
+              </div>
             </div>
           </div>
         </div>
@@ -675,12 +791,32 @@
         <div class="card-divider"></div>
         <div class="card-section">
           <div class="card-section-label">This Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="task-list">
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Amazon demo prep (May 7) — building end-to-end member narrative for Kelly demo account</div>
+            </div>
+            <div class="task-item">
+              <div class="task-dot"></div>
+              <div>Regular syncs with Christynne, Alina, Erin, Kara on demo flow (ET, Enso, CVMA)</div>
+            </div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <div class="card-section">
-          <div class="card-section-label">Last Week</div>
-          <div class="task-empty">Asana data source coming soon</div>
+          <div class="card-section-label clickable" onclick="toggleSection('lori-last', this)" id="lori-last-label">
+            Last Week <span class="count-pill">2 done</span><span class="chevron">▾</span>
+          </div>
+          <div class="task-list" id="lori-last">
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>M2→M3 upgrade launched (Apr 22)</div>
+            </div>
+            <div class="task-item task-done">
+              <div class="task-dot"></div>
+              <div>CVMA MLP holding 90/10 positive</div>
+            </div>
+          </div>
         </div>
       </div>
 
