@@ -531,57 +531,33 @@
 
         <div class="card-divider"></div>
         <div class="card-section">
-          <div class="card-section-label">This Week</div>
-          <div class="task-list">
-            <div class="task-item">
-              <div class="task-dot"></div>
-              <div>
-                <div>WPH FTU exercises — TDD 4.9 review</div>
-                <div style="font-size:11px;color:#6e6e73;margin-top:3px;line-height:1.4;"><b>What it is:</b> Hardcoded exercise list alignment for WPH FTU<br><b>Update:</b> Amber Cyr reworking TDD 4.9; active clarification thread Apr 28<br><b>Action:</b> Monitor TDD 4.9 completion</div>
-              </div>
-            </div>
-            <div class="task-item">
-              <div class="task-dot"></div>
-              <div>
-                <div>WPH PSFS question</div>
-                <div style="font-size:11px;color:#6e6e73;margin-top:3px;line-height:1.4;"><b>What it is:</b> PSFS display bug for WPH members in DDS2.0<br><b>Update:</b> Confirmed PSFS not applicable to WPH; DDS2.0 temporarily showing it<br><b>Action:</b> Track DDS2.0 fix</div>
-              </div>
-            </div>
-            <div class="task-item">
-              <div class="task-dot"></div>
-              <div>
-                <div>Migraine PT workflow finalization</div>
-                <div style="font-size:11px;color:#6e6e73;margin-top:3px;line-height:1.4;"><b>What it is:</b> PT workflows for May 11 launch (symptom uptick, active migraine, Enso efficacy)<br><b>Update:</b> PT readiness target May 11; workflows in final review<br><b>Action:</b> Confirm workflows complete before launch</div>
-              </div>
-            </div>
+          <div class="card-section-label clickable" onclick="toggleSection('chloe-pt', this)">
+            PT Updates <span class="chevron">▾</span>
           </div>
-        </div>
-        <div class="card-divider"></div>
-        <div class="card-section">
-          <div class="card-section-label clickable" onclick="toggleSection('chloe-last', this)" id="chloe-last-label">
-            Last Week <span class="count-pill">3 done</span><span class="chevron">▾</span>
-          </div>
-          <div class="task-list" id="chloe-last">
-            <div class="task-item task-done">
-              <div class="task-dot"></div>
-              <div>
-                <div>WPH bucketing logic alignment</div>
-                <div style="font-size:11px;color:#aeaeb2;margin-top:3px;line-height:1.4;"><b>What it is:</b> Sub-condition bucketing logic for WPH enrollment<br><b>Update:</b> Aligned with Lakshmi on high_risk_pregnancy and postPartumTooSoon flags<br><b>Action:</b> Complete</div>
-              </div>
+          <div id="chloe-pt" class="pod-updates-list">
+            <div class="pod-update-item">
+              <div class="pod-update-name">Program Experience</div>
+              <div class="pod-update-text">Collaborating with PEP on FTU experience improvements and AQ input iteration. Reviewing YIYP v2 direction following Apr 23 Product Jam.</div>
             </div>
-            <div class="task-item task-done">
-              <div class="task-dot"></div>
-              <div>
-                <div>PT AI Task Force weekly sync</div>
-                <div style="font-size:11px;color:#aeaeb2;margin-top:3px;line-height:1.4;"><b>What it is:</b> Edge case testing for Robin GPR<br><b>Update:</b> Completed weekly sync; edge cases reviewed with Carol's team<br><b>Action:</b> Complete</div>
-              </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name">Migraines</div>
+              <div class="pod-update-text">DRI for PT readiness: finalizing PT workflows for symptom uptick, active migraine, and Enso efficacy ahead of May 11 launch.</div>
             </div>
-            <div class="task-item task-done">
-              <div class="task-dot"></div>
-              <div>
-                <div>Care Hub 2.0 Q1 survey consolidation</div>
-                <div style="font-size:11px;color:#aeaeb2;margin-top:3px;line-height:1.4;"><b>What it is:</b> Q1 member feedback survey consolidation for Care Hub 2.0<br><b>Update:</b> Consolidation complete<br><b>Action:</b> Complete</div>
-              </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name">Brain Health</div>
+              <div class="pod-update-text">Leading ET topic scoring system validation; scoping CMT manual pilot and coordinating billing/licensing for pre-pilot phase.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name">Program Foundations</div>
+              <div class="pod-update-text">WPH bucketing logic alignment with Lakshmi; collaborating with PEP on perisurgical FTU clinical requirements.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name">Exercise Therapy</div>
+              <div class="pod-update-text">Co-authoring ET Modification Loop tiger team strategy doc; pending sign-off on remove vs. exclusion terminology for exercise customization records.</div>
+            </div>
+            <div class="pod-update-item">
+              <div class="pod-update-name">CareHub Pods</div>
+              <div class="pod-update-text">Weekly PT AI Task Force syncs — Robin GPR edge case testing. Care Hub 2.0 Q1 survey consolidation complete.</div>
             </div>
           </div>
         </div>
